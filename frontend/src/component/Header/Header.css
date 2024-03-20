@@ -1,0 +1,30 @@
+.header_container {
+  border: 2px solid blue;
+  display: flex;
+}
+
+.header_logo {
+  flex: 1;
+  border: 2px solid green;
+}
+.header_items {
+  flex: 2;
+  border: 2px solid black;
+}
+.header_items > ul {
+  display: flex;
+  justify-content: flex-end;
+  gap: 25px;
+  padding: 0 15px;
+}
+.header_items > ul > li {
+  list-style: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.header_items > ul > li:hover {
+  color: green;
+}
+.header_items > ul > li > a {
+  text-decoration: none;
+}
