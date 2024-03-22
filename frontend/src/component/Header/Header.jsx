@@ -7,14 +7,19 @@ import { Link } from "react-router-dom";
 function Header() {
   return (
     <div className="header_container">
-      <div className="header_logo">Logo</div>
+      <div className="header_logo">
+        <h1>.blog</h1>
+      </div>
       <div className="header_items">
         <ul>
           <li>
             <Link>Home</Link>
           </li>
           <li>
-            <Link>Sign in</Link>
+            <Link to={"/signin"}>Sign in</Link>
+          </li>
+          <li>
+            <Link to="/signup">Sign Up</Link>
           </li>
         </ul>
       </div>

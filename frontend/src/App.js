@@ -1,9 +1,14 @@
 import "./App.css";
-import Header from "./component/Header/Header";
+import Login from "./pages/Login/Login";
+import { Route, Routes } from "react-router-dom";
+import Signup from "./pages/signup/Signup";
 function App() {
   return (
     <div>
-      <Header />
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Login />} />
+      </Routes>
     </div>
   );
 }

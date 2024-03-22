@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Waiting+for+the+Sunrise&display=swap");
+
+.signup_container {
+  background-image: url("https://img.freepik.com/free-vector/copy-space-bokeh-spring-lights-background_52683-55649.jpg?w=740&t=st=1710955791~exp=1710956391~hmac=789061c58703c75f8691bfc3a31352fe7afcc038d7392f07f760164258883136");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 88vh;
+
+  display: flex;
+
+  justify-content: flex-end;
+}
+.signup_content {
+  border: 2px solid rgb(6, 65, 45);
+  border-radius: 2px;
+  margin: 10px 29px 0 0;
+  padding: 15px;
+  height: auto;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+.signup_content > h1 {
+  text-align: center;
+  color: rgba(45, 45, 59, 0.92);
+}
+
+.signup_content > span > input {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.098);
+  outline: none !important;
+  font-size: 20px;
+  letter-spacing: 3px;
+
+  background-color: transparent;
+  margin-top: 30px;
+  margin-left: 15px;
+}
+
+.signup_content > button {
+  margin-top: 35px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(41, 135, 68, 0.814);
+  color: #ddd9e4f9;
+  font-size: 18px;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+}

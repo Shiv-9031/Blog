@@ -1,21 +1,28 @@
 .header_container {
-  border: 2px solid blue;
   display: flex;
+  height: 65px;
 }
 
 .header_logo {
   flex: 1;
-  border: 2px solid green;
+  display: flex;
+  align-items: center;
+}
+.header_logo > h1 {
+  width: 150px;
+  height: 100%;
+  margin-left: 25px;
 }
 .header_items {
   flex: 2;
-  border: 2px solid black;
 }
 .header_items > ul {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   gap: 25px;
-  padding: 0 15px;
+
+  margin-right: 50px;
 }
 .header_items > ul > li {
   list-style: none;
