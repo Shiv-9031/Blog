@@ -1,7 +1,12 @@
 import React from "react";
 import Layout from "../../component/Layout/Layout.jsx";
+import { api_post_service } from "../../util/service.mjs";
+import { userInfo } from "../context/UserContext.jsx";
+//import react-toastify
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserCheck } from "react-icons/fa";
 import { TbPasswordFingerprint } from "react-icons/tb";
 import "./Login.css";
@@ -15,6 +20,8 @@ function Login() {
   //using hooks
 
   const [loginData, setLoginData] = React.useState(initialCredentials);
+  const { account, setAccount } = React.useContext(userInfo);
+  const navigate = useNavigate();
 
   //functions
 
@@ -22,10 +29,33 @@ function Login() {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  const sendCredentials = () => {
-    console.log(loginData);
-    setLoginData(initialCredentials);
+  const sendCredentials = async () => {
+    let response = await api_post_service("login", loginData);
+
+    //for empty login details
+    if (loginData.password === "" || loginData.username === "") {
+      toast.error("please fill login detail completely");
+      return;
+    }
+
+    //response after login
+    if (response) {
+      //populate data through use context hook
+      await setAccount({ ...response["data"] });
+
+      //save token in localstorage
+      localStorage.setItem("token", `Bearers ${response.data.token}`);
+
+      //navigate to login page
+      navigate("/");
+      toast.success(`welcome ${account.isuserName.name}`);
+      setLoginData(initialCredentials);
+    }
   };
+
+  React.useEffect(() => {
+    console.log();
+  }, [account]);
 
   return (
     <Layout>

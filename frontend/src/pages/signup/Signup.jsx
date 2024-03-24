@@ -1,5 +1,9 @@
 import React from "react";
 import Layout from "../../component/Layout/Layout.jsx";
+import { useNavigate } from "react-router-dom";
+//import toastify
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { FaUserCheck } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -14,13 +18,15 @@ const initialCredentials = {
   password: "",
   name: "",
   email: "",
-  contact: "",
+  phone: "",
 };
 
 function Signup() {
   //using hooks
 
   const [signupData, setSignupData] = React.useState(initialCredentials);
+  const [existedUsername, setExistedUsername] = React.useState(false);
+  const navigate = useNavigate();
 
   //functions
 
@@ -28,11 +34,42 @@ function Signup() {
     setSignupData({ ...signupData, [e.target.name]: e.target.value });
   };
 
-  const sendCredentials = () => {
-    let response = api_post_service("register", signupData);
-    console.log(signupData);
-    setSignupData(initialCredentials);
+  const sendCredentials = async () => {
+    //validate the sign up form
+    if (
+      signupData.name === "" ||
+      signupData.username === "" ||
+      signupData.email === "" ||
+      signupData.password === "" ||
+      signupData.phone === ""
+    ) {
+      toast.error(" please complete the form");
+    } else {
+      let response = await api_post_service("register", signupData);
+
+      if (!response.data.success) {
+        toast.error(response.data.message);
+      } else {
+        toast.success(response.data.message);
+        setSignupData(initialCredentials);
+        navigate("/signin");
+      }
+    }
   };
+
+  async function isUsernameExisted() {
+    const isusernameExisted = await api_post_service(
+      "isusernameexisted",
+      signupData
+    );
+
+    isusernameExisted.data.success
+      ? setExistedUsername(true)
+      : setExistedUsername(false);
+  }
+  React.useEffect(() => {
+    isUsernameExisted();
+  }, [signupData.username]);
 
   return (
     <Layout>
@@ -75,17 +112,31 @@ function Signup() {
               }}
               value={signupData.username}
             />
+            {existedUsername && (
+              <p
+                style={{
+                  float: "right",
+
+                  marginTop: "-30px",
+                  fontSize: "12px",
+                  color: "red",
+                }}
+              >
+                username already existed
+              </p>
+            )}
           </span>
           <span>
             <BsFillTelephoneForwardFill size={"20px"} />
             <input
               type="tel"
-              name="contact"
+              name="phone"
               placeholder="Contact Number"
               onChange={(e) => {
                 onHandleChange(e);
               }}
-              value={signupData.contact}
+              value={signupData.phone}
+              required
             />
           </span>
 
