@@ -40,16 +40,19 @@ function Login() {
 
     //response after login
     if (response) {
+      //set credential to initialvalues
+      setLoginData(initialCredentials);
+
       //populate data through use context hook
-      await setAccount({ ...response["data"] });
+      await setAccount({ ...response["data"], activePrivateRoutes: true });
 
       //save token in localstorage
       localStorage.setItem("token", `Bearers ${response.data.token}`);
 
       //navigate to login page
       navigate("/");
-      toast.success(`welcome ${account.isuserName.name}`);
-      setLoginData(initialCredentials);
+
+      toast.success(`welcome ${response.data.isuserName.name}`);
     }
   };
 
