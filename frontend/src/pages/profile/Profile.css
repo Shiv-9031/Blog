@@ -1,0 +1,26 @@
+.profile_container {
+  display: flex;
+  padding: 10px 10px;
+}
+.profile_detail {
+  flex: 4;
+  border: 2px solid tomato;
+}
+
+.profile_detail > .profile_name_card {
+  padding: 15px;
+}
+.profile_detail > .profile_name_card > h1 {
+  font-weight: 800;
+  text-transform: capitalize;
+}
+.profile_image {
+  flex: 2;
+}
+.profile_image > label > img {
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: cover;
+}

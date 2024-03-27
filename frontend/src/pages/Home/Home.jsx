@@ -1,13 +1,14 @@
 import React from "react";
-import { userInfo } from "../context/UserContext";
+import { useSelector } from "react-redux";
+import Layout from "../../component/Layout/Layout";
 
 function Home() {
-  const { account } = React.useContext(userInfo);
-  console.log(account);
+  const usersInfo = useSelector((state) => state.user);
+  console.log(usersInfo.users.isuserName);
   return (
-    <div>
+    <Layout>
       <h1>Home page</h1>
-    </div>
+    </Layout>
   );
 }
 

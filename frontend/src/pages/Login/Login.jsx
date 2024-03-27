@@ -1,10 +1,13 @@
 import React from "react";
 import Layout from "../../component/Layout/Layout.jsx";
 import { api_post_service } from "../../util/service.mjs";
-import { userInfo } from "../context/UserContext.jsx";
-//import react-toastify
+
+//using react-toastify for notifications
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//importing react-redux 's hooks
+import { useSelector, useDispatch } from "react-redux";
+import { userInfo } from "../../Redux/userSlice.jsx";
 
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCheck } from "react-icons/fa";
@@ -20,7 +23,7 @@ function Login() {
   //using hooks
 
   const [loginData, setLoginData] = React.useState(initialCredentials);
-  const { account, setAccount } = React.useContext(userInfo);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //functions
@@ -30,35 +33,30 @@ function Login() {
   };
 
   const sendCredentials = async () => {
-    let response = await api_post_service("login", loginData);
-
     //for empty login details
     if (loginData.password === "" || loginData.username === "") {
       toast.error("please fill login detail completely");
       return;
     }
+    //sending response
+    let response = await api_post_service("login", loginData);
 
     //response after login
-    if (response) {
+    if (response.data.success) {
       //set credential to initialvalues
       setLoginData(initialCredentials);
 
-      //populate data through use context hook
-      await setAccount({ ...response["data"], activePrivateRoutes: true });
-
-      //save token in localstorage
-      localStorage.setItem("token", `Bearers ${response.data.token}`);
+      //dispatch user information to store
+      dispatch(userInfo(response.data));
 
       //navigate to login page
       navigate("/");
 
       toast.success(`welcome ${response.data.isuserName.name}`);
+    } else {
+      toast.error(response.data.message);
     }
   };
-
-  React.useEffect(() => {
-    console.log();
-  }, [account]);
 
   return (
     <Layout>
